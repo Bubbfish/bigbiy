@@ -1,29 +1,80 @@
 <template>
-  <div class="home">
-    <!-- <cube-button @click="showPicker">Picker</cube-button> -->
-    <div class="container">
-      <div class="container-item">
-        <span class="label">用户名：</span>
-        <span class="txt">yiyangqianxi</span>
-      </div>
-      <div class="container-item">
-        <span class="label">孩子姓名：</span>
-        <span class="txt">易烊千玺</span>
-      </div>
-       <div class="container-item">
-        <span class="label">手机号码：</span>
-        <span class="txt">17310827263</span>
-      </div>
+    <div class="layout">
+        <Layout>
+            <Header>
+                <Menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo"></div>
+                    <div class="layout-nav">
+                        <MenuItem name="1">
+                            <Icon type="ios-navigate"></Icon>
+                            Item 1
+                        </MenuItem>
+                        <MenuItem name="2">
+                            <Icon type="ios-keypad"></Icon>
+                            Item 2
+                        </MenuItem>
+                        <MenuItem name="3">
+                            <Icon type="ios-analytics"></Icon>
+                            Item 3
+                        </MenuItem>
+                        <MenuItem name="4">
+                            <Icon type="ios-paper"></Icon>
+                            Item 4
+                        </MenuItem>
+                    </div>
+                </Menu>
+            </Header>
+            <Layout>
+                <Sider hide-trigger :style="{background: '#fff'}">
+                    <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
+                        <Submenu name="1">
+                            <template slot="title">
+                                <Icon type="ios-navigate"></Icon>
+                                Item 1
+                            </template>
+                            <MenuItem name="1-1">Option 1</MenuItem>
+                            <MenuItem name="1-2">Option 2</MenuItem>
+                            <MenuItem name="1-3">Option 3</MenuItem>
+                        </Submenu>
+                        <Submenu name="2">
+                            <template slot="title">
+                                <Icon type="ios-keypad"></Icon>
+                                Item 2
+                            </template>
+                            <MenuItem name="2-1">Option 1</MenuItem>
+                            <MenuItem name="2-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="3">
+                            <template slot="title">
+                                <Icon type="ios-analytics"></Icon>
+                                Item 3
+                            </template>
+                            <MenuItem name="3-1">Option 1</MenuItem>
+                            <MenuItem name="3-2">Option 2</MenuItem>
+                        </Submenu>
+                    </Menu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+                    <Breadcrumb :style="{margin: '24px 0'}">
+                        <BreadcrumbItem>Home</BreadcrumbItem>
+                        <BreadcrumbItem>Components</BreadcrumbItem>
+                        <BreadcrumbItem>Layout</BreadcrumbItem>
+                    </Breadcrumb>
+                    <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+                        Content
+                    </Content>
+                </Layout>
+            </Layout>
+            <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
+        </Layout>
     </div>
-    
-
-  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { register } from '../api/api.js'
+import {Layout} from "view-design"
 const column1 = [{ text: '剧毒', value: '剧毒'}, { text: '蚂蚁', value: '蚂蚁' },
   { text: '幽鬼', value: '幽鬼' }]
 export default {
@@ -39,17 +90,17 @@ export default {
     }
   },
   components: {
-    // HelloWorld,
-    // Slider
+    // Layout,
+    // Header
   },
   mounted() {
       let param ={
           username:'刘1思龙',
           password:'123'
       }
-       register(param).then((d)=>{
-           console.log(d)
-       })
+    //    register(param).then((d)=>{
+    //        console.log(d)
+    //    })
   },
   methods: {
     handleScrollEnd(obj) {
@@ -59,47 +110,26 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-  .home
-    height 100%
-    display flex
-    box-sizing border-box
-    flex-direction column
-    padding 35px
-    background-color #F6F6F6
-    .container
-      background-color #ffffff
-      box-shadow 0px 0px 16px 0px rgba(181,181,181,0.2)
-      border-radius 24px
-      padding 0 36px
-      .container-item
-        display flex
-        padding: 35px 0
-        border-bottom 1px solid #F3F3F3
-        .label
-          font-size 28px
-          color #646464
-        .txt
-          flex 1
-          color #191919
-          font-size 28px
-    .slider-wrapper 
-      width 100%
-      height 200px
-      background-color red
-      .horizontal-scroll-list-wrap
-        border: 1px solid rgba(0, 0, 0, 0.1)
-        border-radius: 5px
-        /deep/ .cube-scroll-content
-          display: inline-block
-        .list-wrapper
-          padding: 0 10px
-          line-height: 60px
-          white-space: nowrap
-        .list-item
-          display: inline-block
-          width 200px
-          height 200px
-          line-height 200px
-          background-color pink
-          margin-right 10px
+ .layout{
+    border: 1px solid #d7dde4;
+    background: #f5f7f9;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.layout-logo{
+    width: 100px;
+    height: 30px;
+    background: #5b6270;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+}
+.layout-nav{
+    width: 420px;
+    margin: 0 auto;
+    margin-right: 20px;
+}
 </style>

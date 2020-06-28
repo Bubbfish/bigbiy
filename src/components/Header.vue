@@ -5,6 +5,9 @@
           <i-button type="primary" shape="circle" @click="goSignIn()">登录</i-button>
           <i-button type="primary" shape="circle" @click="goSignUp()">注册</i-button>
         </div>
+        <div class="login">
+          <i-button type="primary" shape="circle" @click="goPublish()">发表文章</i-button>
+        </div>
       </Header>
 </template>
 
@@ -16,7 +19,9 @@ export default {
         },
         goSignUp(){
             this.$router.push({ name: 'Signup'})
-
+        },
+        goPublish(){
+          this.$router.push({ name: 'PulishA'})
         }
     }
 }

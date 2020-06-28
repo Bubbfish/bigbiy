@@ -22,6 +22,16 @@ Vue.use(VueRouter)
     path: '/test',
     name: 'Test',
     component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+  },
+  {
+    path: '/sign_up',
+    name: 'Signup',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Signup.vue')
   }
 ]
 

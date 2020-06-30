@@ -44,6 +44,7 @@
 import { register } from "../api/api.js";
 import { Layout } from "view-design";
 import Header from "../components/Header";
+import { mapState } from "vuex";
 const column1 = [
   { text: "剧毒", value: "剧毒" },
   { text: "蚂蚁", value: "蚂蚁" },
@@ -62,15 +63,9 @@ export default {
     Header
   },
   mounted() {
-    let param = {
-      username: "刘1思龙",
-      password: "123"
-    };
-    //    register(param).then((d)=>{
-    //        console.log(d)
-    //    })
+    console.log(this.user)
     this.contentHeight = window.innerHeight - 64 - 69;
-    //  this.contentHeight =700;
+
   },
   methods: {
     handleReachBottom() {
@@ -84,6 +79,9 @@ export default {
         }, 2000);
       });
     }
+  },
+  computed:{
+    ...mapState(['user'])
   }
 };
 </script>

@@ -1,17 +1,29 @@
 <template>
     <Header class="header">
         <div class="layout-logo"></div>
-        <div class="login">
+
+        <div v-if="this.user" class="login">
+           <Dropdown style="margin-left: 20px">
+              <Button type="primary">
+                  个人中心
+                  <Icon type="ios-arrow-down"></Icon>
+              </Button>
+              <DropdownMenu  slot="list">
+                  <DropdownItem @click.native="goPublish()" name="1" >写文章</DropdownItem>
+              </DropdownMenu>
+          </Dropdown>
+          <!-- <i-button type="primary" shape="circle" ">个人中心</i-button> -->
+        </div>
+        <div v-else class="login">
           <i-button type="primary" shape="circle" @click="goSignIn()">登录</i-button>
           <i-button type="primary" shape="circle" @click="goSignUp()">注册</i-button>
-        </div>
-        <div class="login">
-          <i-button type="primary" shape="circle" @click="goPublish()">发表文章</i-button>
         </div>
       </Header>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
     methods: {
         goSignIn(){
@@ -22,8 +34,14 @@ export default {
         },
         goPublish(){
           this.$router.push({ name: 'PulishA'})
+        },
+        test(){
+          console.log(this)
         }
-    }
+    },
+      computed:{
+    ...mapState(['user'])
+  }
 }
 </script>
 
@@ -46,5 +64,12 @@ export default {
 }
 .header{
      background-color: #1a2c3b;
+}
+.ivu-layout-header{
+  /* line-height: 0px; */
+  /* padding-top: 20px; */
+}
+.ivu-select-dropdown{
+  margin-top: -14px
 }
 </style>

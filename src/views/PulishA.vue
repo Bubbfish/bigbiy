@@ -27,6 +27,7 @@
       export default {
         data () {
           return {
+            value:"",
             content: null,
             editorOption: {
               modules: {

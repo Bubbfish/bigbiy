@@ -5,7 +5,12 @@
       <form @submit.prevent="onSubmit">
         <p>
           <span>账号:</span>
-          <Input v-model="email" prefix="ios-contact" placeholder="请输入你的账号" style="width: 400px" />
+          <Input
+            v-model="username"
+            prefix="ios-contact"
+            placeholder="请输入你的账号"
+            style="width: 400px"
+          />
         </p>
         <p>
           <span>请输入密码:</span>
@@ -21,17 +26,33 @@
 
 <script>
 import Header from "../components/Header";
+import { register } from "../api/api.js";
 export default {
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       confirmPassword: ""
     };
   },
   methods: {
     onSubmit() {
-      this.$router.push({ name: "Test" });
+      if (this.password !== this.confirmPassword) {
+        this.$Message.error("重复密码和初始密码不一样");
+        return;
+      }
+      let param = {
+        username: this.username,
+        password: this.password
+      };
+      register(param).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          this.$router.push({ name: "Login" });
+        }else{
+           this.$Message.error({content:"注册失败",duration:2});
+        }
+      });
     }
   },
   components: {

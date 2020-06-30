@@ -6,8 +6,7 @@
         <p>
           <span>账号:</span>
           <Input
-            type="email"
-            v-model="email"
+            v-model="username"
             prefix="ios-contact"
             placeholder="请输入你的账号"
             style="width: 400px"
@@ -31,17 +30,32 @@
 
 <script>
 import Header from "../components/Header";
+import { mapMutations } from "vuex";
+import { login } from "../api/api.js";
 export default {
   data() {
     return {
-      email: "2462.com",
-      password: "123"
+      username: "",
+      password: ""
     };
   },
   methods: {
     LOGIN() {
-      this.$router.push({ name: "Test" });
-    }
+      let param = {
+        username: this.username,
+        password: this.password
+      };
+      login(param).then(res => {
+        console.log(res);
+        if(res.data.code === 200){
+            this.setUser(res.data.data)
+                  this.$router.push({ name: "Test" });
+        }else if(res.data.code === 401){
+            this.$Message.error("用户名或密码错误");
+        }
+      });
+    },
+    ...mapMutations(["setUser"])
   },
   components: {
     Header

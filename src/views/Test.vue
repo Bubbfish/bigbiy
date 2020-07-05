@@ -19,11 +19,11 @@
             <div class="router-box-item">最新文章</div>
             <div class="router-box-item hot">最热文章</div>
           </div>
-          <div class="list" v-for="(item, index) in list1" :key="index">
+          <div class="list" v-for="(item, index) in list" :key="index" @click="goArticleDetaile(item)">
             <div class="content-text">
-              <p class="p1">ddd</p>
-              <p class="p2">dsddwddw我但是好多好多好多话还收到回电话都会挥洒和大红色的挥洒和哈哈的哈是的哈是的挥洒和大撒的啥好大；的；s</p>
-              <div class="meta">sda</div>
+              <p class="p1">{{item.title}}</p>
+              <p class="p2" v-html="item.text"></p>
+              <div class="meta">{{item.createtime}}</div>
             </div>
             <img
               class="img1"
@@ -41,20 +41,16 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import { register } from "../api/api.js";
+import { getHomeArticle } from "../api/api.js";
 import { Layout } from "view-design";
 import Header from "../components/Header";
 import { mapState } from "vuex";
-const column1 = [
-  { text: "剧毒", value: "剧毒" },
-  { text: "蚂蚁", value: "蚂蚁" },
-  { text: "幽鬼", value: "幽鬼" }
-];
+
 export default {
   name: "Home",
   data() {
     return {
-      list1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      list: [],
       contentHeight: 0
     };
   },
@@ -65,15 +61,26 @@ export default {
   mounted() {
     console.log(this.user)
     this.contentHeight = window.innerHeight - 64 - 69;
-
+    let param={
+        kind:1
+    }
+    getHomeArticle(param).then(res=>{
+        if(res.data.code === 200){
+            this.list = res.data.data.res;
+        }
+    })
+    
   },
   methods: {
+        goArticleDetaile(item){
+       this.$router.push({ name: 'ArtDetaile',params:{articleInfo:item}})
+    },
     handleReachBottom() {
       return new Promise(resolve => {
         setTimeout(() => {
-          const last = this.list1[this.list1.length - 1];
+          const last = this.list[this.list.length - 1];
           for (let i = 1; i < 11; i++) {
-            this.list1.push(last + i);
+            this.list.push(last + i);
           }
           resolve();
         }, 2000);

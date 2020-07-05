@@ -1,6 +1,6 @@
 <template>
     <Header class="header">
-        <div class="layout-logo"></div>
+        <div class="layout-logo" @click="goHome()"></div>
 
         <div v-if="this.user" class="login">
            <Dropdown style="margin-left: 20px">
@@ -10,6 +10,7 @@
               </Button>
               <DropdownMenu  slot="list">
                   <DropdownItem @click.native="goPublish()" name="1" >写文章</DropdownItem>
+                  <DropdownItem @click.native="goMyArticle()" name="1" >我的文章</DropdownItem>
               </DropdownMenu>
           </Dropdown>
           <!-- <i-button type="primary" shape="circle" ">个人中心</i-button> -->
@@ -35,8 +36,11 @@ export default {
         goPublish(){
           this.$router.push({ name: 'PulishA'})
         },
-        test(){
-          console.log(this)
+        goMyArticle(){
+          this.$router.push({ name: 'MyArticle'})
+        },
+        goHome(){
+          this.$router.push({ name: 'Test'})
         }
     },
       computed:{

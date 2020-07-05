@@ -37,6 +37,16 @@ Vue.use(VueRouter)
     path: '/PulishA',
     name: 'PulishA',
     component: () => import(/* webpackChunkName: "about" */ '../views/PulishA.vue')
+  },
+  {
+    path: '/MyArticle',
+    name: 'MyArticle',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MyArticle.vue')
+  },
+  {
+    path: '/ArtDetaile',
+    name: 'ArtDetaile',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ArtDetaile.vue')
   }
 ]
 

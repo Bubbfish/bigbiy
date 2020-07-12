@@ -11,3 +11,9 @@ export const publishArticle = params => vhttp('/v1/article/', params, 'POST')
 export const getArticle = params => vhttp('/v1/article/', params, 'GET')
 //获取首页数据
 export const getHomeArticle = params => vhttp('/v1/index/', params, 'GET')
+//发表评论
+export const postComment = params => vhttp('/v1/comment/', params, 'POST')
+//获取评论
+export const getCommentList = params => vhttp('/v1/comment/', params, 'GET')
+//得到文章详情
+export const getArticleDetail = params => vhttp('/v1/one_article/', params, 'GET')

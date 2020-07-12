@@ -16,13 +16,13 @@
           :height="contentHeight"
         >
           <div class="router-box">
-            <div class="router-box-item">最新文章</div>
-            <div class="router-box-item hot">最热文章</div>
+            <div class="router-box-item" @click="handleNewArticle()">最新文章</div>
+            <div class="router-box-item hot" @click="handleHotArticle(item)">最热文章</div>
           </div>
-          <div class="list" v-for="(item, index) in list" :key="index" @click="goArticleDetaile(item)">
-            <div class="content-text">
+          <div class="list" v-for="(item, index) in list" :key="index">
+            <div class="content-text" @click="goArticleDetaile(item)">
               <p class="p1">{{item.title}}</p>
-              <p class="p2" v-html="item.text"></p>
+              <p class="p2">{{item.short_text}}</p>
               <div class="meta">{{item.createtime}}</div>
             </div>
             <img
@@ -30,6 +30,9 @@
               src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=204471953,2683458197&fm=26&gp=0.jpg"
               alt
             />
+          </div>
+          <div v-if="this.list.length >= this.countNum" class="noarticle">
+            没有更多文章了
           </div>
         </Scroll>
       </div>
@@ -51,7 +54,9 @@ export default {
   data() {
     return {
       list: [],
-      contentHeight: 0
+      contentHeight: 0,
+      currentIndex: 1,
+      countNum: 0
     };
   },
   components: {
@@ -59,36 +64,69 @@ export default {
     Header
   },
   mounted() {
-    console.log(this.user)
+    // console.log(this.user);
     this.contentHeight = window.innerHeight - 64 - 69;
-    let param={
-        kind:1
-    }
-    getHomeArticle(param).then(res=>{
-        if(res.data.code === 200){
-            this.list = res.data.data.res;
-        }
-    })
-    
+    let param = {
+      kind: 1,
+      page_size: 10
+    };
+    getHomeArticle(param).then(res => {
+      if (res.data.code === 200) {
+        this.list = res.data.data.res;
+        this.countNum = res.data.data.count_num;
+      }
+    });
   },
   methods: {
-        goArticleDetaile(item){
-       this.$router.push({ name: 'ArtDetaile',params:{articleInfo:item}})
+    handleNewArticle(){
+      this.list = []
+        this.currentIndex =1;
+        let param = {
+          kind: 1,
+          page: this.currentIndex,
+          page_size: 10
+        };
+        getHomeArticle(param).then(res => {
+          if (res.data.code === 200) {
+            this.list.push(res.data.data.res);
+          }
+        });
+    },
+        handleHotArticle(){
+      this.list = []
+        this.currentIndex =1;
+        let param = {
+          kind: 2,
+          page: this.currentIndex,
+          page_size: 10
+        };
+        getHomeArticle(param).then(res => {
+          if (res.data.code === 200) {
+            this.list.push(res.data.data.res);
+          }
+        });
+    },
+    goArticleDetaile(item) {
+      this.$router.push({ name: "ArtDetaile", params: { articleInfo: item } });
     },
     handleReachBottom() {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          const last = this.list[this.list.length - 1];
-          for (let i = 1; i < 11; i++) {
-            this.list.push(last + i);
+      if (this.list.length < this.countNum) {
+        this.currentIndex += this.currentIndex;
+        let param = {
+          kind: 1,
+          page: this.currentIndex,
+          page_size: 10
+        };
+        getHomeArticle(param).then(res => {
+          if (res.data.code === 200) {
+            this.list.push(res.data.data.res);
           }
-          resolve();
-        }, 2000);
-      });
+        });
+      }
     }
   },
-  computed:{
-    ...mapState(['user'])
+  computed: {
+    ...mapState(["user"])
   }
 };
 </script>
@@ -217,5 +255,9 @@ export default {
 
 .hot {
   margin-left: 10px;
+}
+.noarticle{
+  color #ffffff
+  margin 15px
 }
 </style>

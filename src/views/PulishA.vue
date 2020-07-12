@@ -110,6 +110,7 @@ export default {
   <style>
 .publish {
   margin-top: 150px;
+  height: 200px;
 }
 .warp {
   padding: 0 20px;

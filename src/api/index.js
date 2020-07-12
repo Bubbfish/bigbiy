@@ -16,7 +16,6 @@ export default async (url = '', params = {}, type = 'GET') => {
                 return status < 500; // Reject only if the status code is greater than or equal to 500
             }            
         }).then(res => {
-            console.log(res)
             resolve(res)
             // if (url.indexOf('/reservations') > -1) {
             //     resolve(res)

@@ -17,7 +17,7 @@
         >
           <div class="router-box">
             <div class="router-box-item" @click="handleNewArticle()">最新文章</div>
-            <div class="router-box-item hot" @click="handleHotArticle(item)">最热文章</div>
+            <div class="router-box-item hot" @click="handleHotArticle()">最热文章</div>
           </div>
           <div class="list" v-for="(item, index) in list" :key="index">
             <div class="content-text" @click="goArticleDetaile(item)">
@@ -87,8 +87,11 @@ export default {
           page_size: 10
         };
         getHomeArticle(param).then(res => {
+          console.log(res)
           if (res.data.code === 200) {
-            this.list.push(res.data.data.res);
+            // this.list =
+            this.list = this.list.concat(res.data.data.res);
+            console.log(this.list)
           }
         });
     },
@@ -102,7 +105,8 @@ export default {
         };
         getHomeArticle(param).then(res => {
           if (res.data.code === 200) {
-            this.list.push(res.data.data.res);
+            // this.list.push(res.data.data.res);
+            this.list = this.list.concat(res.data.data.res);
           }
         });
     },

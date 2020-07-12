@@ -66,7 +66,7 @@ export default {
   width: 100vw;
   background-color: black;
   text-align: center;
-  height: 100vh;
+  /* height: 100vh; */
   position: absolute;
   top: 0;
   left: 0;
